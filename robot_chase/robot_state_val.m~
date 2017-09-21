@@ -1,0 +1,21 @@
+function J_x = robot_state_val(x, k, N)
+%UNTITLED3 Summary of this function goes here
+%   Detailed explanation goes here
+Q = [1 0 -1 0; 0 1 0 -1; -1 0 1 0; 0 -1 0 1];
+R = eye(2);
+
+u = 
+
+J_x = x' * Q * x + u' * R * u;
+
+
+A = eye(4); 
+A(3, :) = [-0.2 0 1.2 0];
+A(4, :) = [0 -0.2 0 1.2];
+B = zeros(4, 4); B(1, 1) = 1; B(2, 2) = 1;
+
+
+
+
+end
+
