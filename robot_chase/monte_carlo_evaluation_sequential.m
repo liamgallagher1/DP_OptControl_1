@@ -1,4 +1,4 @@
-function J_x_achieved = monte_carlo_evaluation(x, k, N, W, K)
+function J_x_achieved = monte_carlo_evaluation_sequential(x, k, N, W, Ks)
 % Performs bellman recursion to compute the cost function for a 
 % discrete finite time MDP with costs 
 % cost: J_k(x) = x' Q x + u' Q u + E[J_k+1(x_k+1)], 
@@ -24,14 +24,15 @@ A(4, :) = [0 -0.2 0 1.2];
 B = zeros(4, 2); B(1, 1) = 1; B(2, 2) = 1;
 
 % Fixed linear policy
-u = K * x;
+u = Ks{k+1, 1} * x;
 % Gaussian noise
 omega = mvnrnd(zeros(4, 1), W, 1);
 % State transition
-x_next = A * x + B * u + omega;
+x_next = A * x + B * u + omega';
+
 % Recurse %
-J_x_next = monte_carlo_evaluation(x_next, k + 1, N, W, K);
-% Cost of state and act
+J_x_next = monte_carlo_evaluation_sequential(x_next, k + 1, N, W, Ks);
+% Cost of state and action
 local_cost = x' * Q * x + u' * R * u;
 
 J_x_achieved = local_cost + J_x_next;
