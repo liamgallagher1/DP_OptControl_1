@@ -1,4 +1,4 @@
-clear;
+%clear;
 % Tic_tac_toe board states are represented as ints in [0, 3^9)
 % numbered from top left to bottom right as increasing powers of 3, 
 % empty is 0, an O is 1, and an X is 2. 
@@ -30,7 +30,7 @@ for step = 8:-2:2
         % I can make these moves
         my_responses = possible_response(board, false); % X moves
         num_responses = length(my_responses);
-        board_val = 0;
+        board_val = -1;
         for i = 1:num_responses
             next_board = my_responses(i);
             if is_solved(next_board, false)
@@ -60,3 +60,4 @@ for i = 0:8
     prob = prob + J_x(2, 3^i + 1) / 9;
 end
 prob
+pi_lose = pi;

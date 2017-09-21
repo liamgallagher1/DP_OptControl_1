@@ -1,4 +1,4 @@
-clear;
+%clear;
 % Tic_tac_toe board states are represented as ints in [0, 3^9)
 % numbered from top left to bottom right as increasing powers of 3, 
 % empty is 0, an O is 1, and an X is 2. 
@@ -22,14 +22,14 @@ for board = 0:3^9 - 1
         % We already won!
         J_x(9, board+1) = 1;
         continue;
-    elseif is_solved(board, true)
+    elseif is_solved(board, true) % We have already lost
         J_x(9, board+1) = -1;
         continue;
     end
     % What moves can I make? %
     my_responses = possible_response(board, false); % X moves
     num_responses = length(my_responses);
-    board_val = 0;
+    board_val = -1;
     % How good is the result for me? %
     for i = 1:num_responses
         response = my_responses(i);
@@ -58,12 +58,13 @@ for step = 7:-2:1
         % I can make these moves
         my_responses = possible_response(board, false); % X moves
         num_responses = length(my_responses);
-        board_val = 0;
+        board_val = -1;
         for i = 1:num_responses
             next_board = my_responses(i);
             if is_solved(next_board, false)
                 board_val = 1;
                 pi(step, board+1) = next_board;
+                break;
             end
             % But my oponnent is equally likely to respond with these
             opponent_responses = possible_response(next_board, true); % O responds
@@ -83,3 +84,4 @@ for step = 7:-2:1
 end
 
 J_x(1,1)
+pi_lose = pi;

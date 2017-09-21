@@ -29,7 +29,7 @@ for board = 0:3^9 - 1
     % What moves can I make? %
     my_responses = possible_response(board, false); % X moves
     num_responses = length(my_responses);
-    board_val = 0;
+    board_val = -1;
     % How good is the result for me? %
     for i = 1:num_responses
         response = my_responses(i);
@@ -58,7 +58,7 @@ for step = 7:-2:1
         % I can make these moves
         my_responses = possible_response(board, false); % X moves
         num_responses = length(my_responses);
-        board_val = 0;
+        board_val = -1;
         for i = 1:num_responses
             next_board = my_responses(i);
             if is_solved(next_board, false)
