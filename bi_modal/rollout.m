@@ -8,15 +8,29 @@ actions{1, 1} = A1; actions{2, 1} = A2;
 all_transtions = cell(16, 1);
 all_costs = cell(16, 1);
 
+k = 0;
+
 Q = eye(2);
 for a = 0:1 %k  = 0
-    transitionA = actions{a+1, 1};
+    if k == 0
+        transitionA = actions{a+1, 1};
+    else
+        transitionA = eye(2);
+    end
     costA = Q;
     for b = 0:1 % k = 1
-        transitionB = actions{b+1, 1} * transitionA;
+        if k <= 1
+            transitionB = actions{b+1, 1} * transitionA;
+        else
+            transitionB = eye(2);
+        end
         costB = transitionA' * Q * transitionA;
         for c = 0:1 % k = 2
-            transitionC = actions{c+1, 1} * transitionB;
+            if k <= 2
+                transitionC = actions{c+1, 1} * transitionB;
+            else
+                transitionC = eye(2);
+            end
             costC = transitionB' * Q * transitionB;
             for d = 0:1 %k = 3
                 transitionD = actions{d+1, 1} * transitionC;
@@ -70,13 +84,13 @@ end
 % contour(x, y, J_xy);
 % figure;
 surf(x, y, J_xy, C_xy);
-title('Optimal Cost, K = 1, Blue = A1, Red = A2'); 
+title('Optimal Cost, K = 0, Blue = A1, Red = A2'); 
 xlabel('x(1)');
 ylabel('x(2)');
 figure;
 scatter(bluex, bluey, 'b');
 hold on; 
 scatter(redx, redy, 'r');
-title('Optimal Action, K = 1, Blue = A1, Red = A2'); 
+title('Optimal Action, K = 0, Blue = A1, Red = A2'); 
 xlabel('x(1)');
 ylabel('x(2)');
